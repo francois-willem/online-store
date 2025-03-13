@@ -21,7 +21,7 @@ const products = [
     description: 'Capturing all your favourite and embarrassing moments',
     price: 2000,
     image: product1,
-    colors: ['Red', 'Blue', 'Green'],
+    colours: ['Red', 'Blue', 'Green'],
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const products = [
     description: 'For those sunny days',
     price: 800,
     image: product2,
-    colors: ['Black', 'Grey', 'Red'],
+    colours: ['Black', 'Grey', 'Red'],
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const products = [
     description: 'To strengthen those forearms ',
     price: 200,
     image: product3,
-    colors: ['Black', 'Pink', 'Blue'],
+    colours: ['Black', 'Pink', 'Blue'],
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const products = [
     description: 'Your gym cannot have enough plates',
     price: 500,
     image: product4,
-    colors: ['Black', 'Yellow', 'Blue'],
+    colours: ['Black', 'Yellow', 'Blue'],
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ const products = [
     description: 'For listening your favourite artists while working',
     price: 1000,
     image: product5,
-    colors: ['Black', 'White', 'Blue'],
+    colours: ['Black', 'White', 'Blue'],
   },
   {
     id: 6,
@@ -61,7 +61,7 @@ const products = [
     description: 'Swing those calories away',
     price: 300,
     image: product6,
-    colors: ['Black', 'Yellow', 'Orange'],
+    colours: ['Black', 'Yellow', 'Orange'],
   },
   {
     id: 7,
@@ -69,7 +69,7 @@ const products = [
     description: 'You need to look good on date night',
     price: 2000,
     image: product7,
-    colors: ['Black', 'Brown', 'White'],
+    colours: ['Black', 'Brown', 'White'],
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ const products = [
     description: 'For the women who want to look beautiful on a night out',
     price: 250,
     image: product8,
-    colors: ['Red', 'Pink', 'Plum'],
+    colours: ['Red', 'Pink', 'Plum'],
   },
   {
     id: 9,
@@ -85,7 +85,7 @@ const products = [
     description: 'Karaoke nights to remember',
     price: 900,
     image: product9,
-    colors: ['Black', 'Grey', 'White'],
+    colours: ['Black', 'Grey', 'White'],
   },
   {
     id: 10,
@@ -93,23 +93,25 @@ const products = [
     description: 'Your nails will never look better',
     price: 150,
     image: product10,
-    colors: ['Grey', 'Pink', 'Blue'],
+    colours: ['Grey', 'Pink', 'Blue'],
   },
 
 ];
 
 export default function Products() {
   const { totalPrice, updateTotalPrice } = useTotalPrice();
-  const [selectedColors, setSelectedColors] = useState({});
+  const [selectedColours, setSelectedColours] = useState({});
   const dispatch = useDispatch();
 
   const handleBuy = (product) => {
+    const selectedColour = selectedColours[product.id]; // Get the selected colour
+    const productWithColour = { ...product, colour: selectedColour }; // Add colour to the product
     updateTotalPrice(product.price);
-    dispatch(addToCart(product));
+    dispatch(addToCart(productWithColour)); // Pass the product with colour to the cart
   };
 
-  const handleColorChange = (productId, color) => {
-    setSelectedColors({ ...selectedColors, [productId]: color });
+  const handleColourChange = (productId, colour) => {
+    setSelectedColours({ ...selectedColours, [productId]: colour });
   };
 
   return (
@@ -142,13 +144,13 @@ export default function Products() {
                   </Card.Text>
 
                   <DropdownButton
-                    title={selectedColors[product.id] || 'Select Color'}
-                    onSelect={(e) => handleColorChange(product.id, e)}
+                    title={selectedColours[product.id] || 'Select Colour'}
+                    onSelect={(e) => handleColourChange(product.id, e)}
                     className="mb-2"
                   >
-                    {product.colors.map((color) => (
-                      <Dropdown.Item key={color} eventKey={color}>
-                        {color}
+                    {product.colours.map((colour) => (
+                      <Dropdown.Item key={colour} eventKey={colour}>
+                        {colour}
                       </Dropdown.Item>
                     ))}
                   </DropdownButton>
